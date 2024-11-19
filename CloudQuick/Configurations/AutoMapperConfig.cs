@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CloudQuick.Data;
 using CloudQuick.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CloudQuick.Configurations
 {
@@ -18,8 +19,11 @@ namespace CloudQuick.Configurations
             //CreateMap<StudentDTo, Student>().ReverseMap().ForMember(n => n.StudentName, opt => opt.Ignore());
 
             //Confiq for Transforming some property names
-            //CreateMap<StudentDTo, Student>().ReverseMap().AddTransform<string>(n => string.IsNullOrEmpty(n) ? "No adress found" : n);
-            CreateMap<StudentDTo, Student>().ReverseMap();
+            CreateMap<StudentDTo, Student>().ReverseMap()
+
+                .ForMember(n => n.Address, opt => opt.MapFrom(n => string.IsNullOrEmpty(n.Address) ? "No adress found" : n.Address));
+           
+            //CreateMap<StudentDTo, Student>().ReverseMap();
 
         }
     }

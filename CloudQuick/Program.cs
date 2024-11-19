@@ -1,5 +1,6 @@
 using CloudQuick.Configurations;
 using CloudQuick.Data;
+using CloudQuick.Data.Repository;
 using CloudQuick.MyLogging;
 using log4net;
 using log4net.Config;
@@ -43,6 +44,9 @@ builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
 // Register logging service as singleton
 builder.Services.AddSingleton<IMyLogger, LogToServerMemory>();
+
+builder.Services.AddTransient<IMyLogger, LogToServerMemory>();
+builder.Services.AddTransient<IStudentRepository, StudentRepository>();
 
 
 var app = builder.Build();
