@@ -47,15 +47,15 @@ namespace CloudQuick.Data.Repository
 
         public async Task<int> UpdateAsync(Student student)
         {
-            var existingStudent = await _dbContext.Students.FirstOrDefaultAsync(s => s.Id == student.Id);
-            if (existingStudent == null)
-                throw new ArgumentNullException($"No student found with id: {student.Id}");
+            //var existingStudent = await _dbContext.Students.FirstOrDefaultAsync(s => s.Id == student.Id);
+            //if (existingStudent == null)
+                //throw new ArgumentNullException($"No student found with id: {student.Id}");
 
-            // Update fields explicitly....
-            existingStudent.StudentName = student.StudentName;
-            existingStudent.Email = student.Email;
-            existingStudent.Address = student.Address;
-            existingStudent.DOB = student.DOB;
+            //// Update fields explicitly....
+            //existingStudent.StudentName = student.StudentName;
+            //existingStudent.Email = student.Email;
+            //existingStudent.Address = student.Address;
+            //existingStudent.DOB = student.DOB;
 
             await _dbContext.SaveChangesAsync();
             return student.Id;

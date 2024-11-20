@@ -46,7 +46,9 @@ builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 builder.Services.AddSingleton<IMyLogger, LogToServerMemory>();
 
 builder.Services.AddTransient<IMyLogger, LogToServerMemory>();
-builder.Services.AddTransient<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped(typeof(ICloudRepository<>), typeof(CloudRepository<>));
+
 
 
 var app = builder.Build();

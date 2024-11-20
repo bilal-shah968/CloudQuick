@@ -17,10 +17,10 @@ namespace CloudQuick.Controllers
     {
         private readonly ILogger<StudentController> _logger;
         private readonly IMapper _mapper;
-        private readonly IStudentRepository _studentRepository;
+        private readonly ICloudRepository<Student> _studentRepository;
 
         public StudentController(ILogger<StudentController> logger,
-            IMapper mapper, IStudentRepository studentRepository)
+            IMapper mapper, ICloudRepository<Student> studentRepository)
         {
             _logger = logger;
             _mapper =  mapper;
@@ -56,7 +56,7 @@ namespace CloudQuick.Controllers
                 return BadRequest("Invalid ID provided.");
             }
 
-            var student = await _studentRepository.GetByIdAsync(id);
+            var student = await _studentRepository.GetByIdAsync(student => student.Id == id);
             if (student == null)
             {
                 _logger.LogError($"Student with ID {id} not found.");
@@ -73,7 +73,7 @@ namespace CloudQuick.Controllers
         {
             _logger.LogInformation($"Searching for student with name: {name}");
 
-            var student = await _studentRepository.GetByNameAsync(name);
+            var student = await _studentRepository.GetByNameAsync(student => student.StudentName.ToLower().Contains(name.ToLower()));
             if (student == null)
             {
                 _logger.LogWarning($"Student with name '{name}' not found.");
@@ -98,9 +98,9 @@ namespace CloudQuick.Controllers
 
             Student student = _mapper.Map<Student>(dto);
 
-           var Id =  await _studentRepository.CreateAsync(student);
+           var studentAfterCreation =  await _studentRepository.CreateAsync(student);
 
-            dto.Id = student.Id;
+            dto.Id = studentAfterCreation.Id;
 
             return CreatedAtRoute("GetStudentById", new { id = dto.Id }, dto);
         }
@@ -116,7 +116,7 @@ namespace CloudQuick.Controllers
             if (dto == null || dto.Id <= 0)
                 return BadRequest("Invalid data provided.");
 
-            var existingStudent = await _studentRepository.GetByIdAsync(dto.Id, true);
+            var existingStudent = await _studentRepository.GetByIdAsync(student => student.Id == dto.Id, true);
 
             if (existingStudent == null)
                 return NotFound($"Student with ID {dto.Id} not found.");
@@ -143,7 +143,7 @@ namespace CloudQuick.Controllers
             if (patchDocument == null || id <= 0)
                 return BadRequest("Invalid data provided.");
 
-            var existingStudent = await _studentRepository.GetByIdAsync(id, true);
+            var existingStudent = await _studentRepository.GetByIdAsync(student => student.Id == id, true);
             if (existingStudent == null)
                 return NotFound($"Student with ID {id} not found.");
 
@@ -172,7 +172,7 @@ namespace CloudQuick.Controllers
             if (id <= 0)
                 return BadRequest("Invalid ID provided.");
 
-            var student = await _studentRepository.GetByIdAsync(id);
+            var student = await _studentRepository.GetByIdAsync(student => student.Id == id);
             if (student == null)
                 return NotFound($"Student with ID {id} not found.");
 
