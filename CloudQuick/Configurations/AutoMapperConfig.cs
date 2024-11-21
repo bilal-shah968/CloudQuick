@@ -22,6 +22,9 @@ namespace CloudQuick.Configurations
             CreateMap<StudentDTo, Student>().ReverseMap()
 
                 .ForMember(n => n.Address, opt => opt.MapFrom(n => string.IsNullOrEmpty(n.Address) ? "No adress found" : n.Address));
+
+
+
            
             //CreateMap<StudentDTo, Student>().ReverseMap();
 

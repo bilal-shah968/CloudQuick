@@ -14,6 +14,10 @@ namespace CloudQuick.Data.Config
 
             builder.Property(x => x.Id).UseIdentityColumn();
 
+
+
+
+
             builder.Property(n => n.StudentName).IsRequired();
             builder.Property(n => n.StudentName).IsRequired().HasMaxLength(250);
             builder.Property(n => n.Address).IsRequired(false) .HasMaxLength(500);
