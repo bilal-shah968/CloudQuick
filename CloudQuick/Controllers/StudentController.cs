@@ -156,6 +156,8 @@ namespace CloudQuick.Controllers
 
             existingStudent = _mapper.Map<Student>(studentDTo);
 
+
+
             await _studentRepository.UpdateAsync(existingStudent);
 
             //204 - NoContent
@@ -173,6 +175,9 @@ namespace CloudQuick.Controllers
                 return BadRequest("Invalid ID provided.");
 
             var student = await _studentRepository.GetByIdAsync(student => student.Id == id);
+
+
+
             if (student == null)
                 return NotFound($"Student with ID {id} not found.");
 
