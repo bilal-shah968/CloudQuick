@@ -37,6 +37,8 @@ namespace CloudQuick.Data.Repository
                 return await _dbContext.Students.AsNoTracking().FirstOrDefaultAsync(n => n.Id == id);
             else
                 return await _dbContext.Students.FirstOrDefaultAsync(n => n.Id == id);
+       
+        
         }
 
         public async Task<Student> GetByNameAsync(string name)
