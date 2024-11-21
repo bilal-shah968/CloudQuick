@@ -20,6 +20,8 @@ namespace CloudQuick.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+
+
             _logger.LogTrace("log message from trace method");
             _logger.LogDebug("log message from Debug method");
             _logger.LogInformation("log message from Information method");
